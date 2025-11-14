@@ -1,0 +1,38 @@
+version: '3'
+services:
+  tkstar:
+    image: registry.gitlab.com/tkstar/latest:master
+    restart: unless-stopped
+    tty: true
+    ports: 
+      - "80:80"
+      - "${PORT_1}:${PORT_1}"
+      - "${PORT_2}:${PORT_2}"
+      - "${PORT_3}:${PORT_3}"
+    env_file: .env
+    environment: 
+      RETHINK_HOST: rethinkdb
+      RETHINK_PORT: 28015
+      NGINX_DOMAINS: ${DOMAIN}
+      DB_HOST: mysql
+
+  mysql:
+    image: mariadb:10.5
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+      - "./database.sql:/docker-entrypoint-initdb.d/tkstar.sql"
+
+  rethinkdb:
+    image: rethinkdb:2.4
+    restart: unless-stopped
+    volumes:
+      - "rethinkdb_data:/data"
+volumes:
+  mysql_data:
+  rethinkdb_data:

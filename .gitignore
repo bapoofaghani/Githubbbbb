@@ -1,0 +1,4 @@
+node_server2/node_modules/
+cache/smarty/default/cache/*
+node_server2/rethinkdb_data
+vendor/codeigniter/framework/system/cache/sess/

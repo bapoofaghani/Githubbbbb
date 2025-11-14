@@ -1,0 +1,8 @@
+cache/smarty/default/cache/*
+node_server2/rethinkdb_data
+node_server2/node_modules
+.git
+docker-compose.yml
+vendor/codeigniter/framework/system/cache/sess/
+.gitlab-ci.yml
+.gitignore
